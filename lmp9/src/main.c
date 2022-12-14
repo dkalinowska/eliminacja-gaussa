@@ -5,7 +5,8 @@
 #include <stdio.h>
 
 
-int main(int argc, char ** argv) {
+int main(int argc, char ** argv) 
+{
 	int res;
 	Matrix * A = readFromFile(argv[1]);
 	Matrix * b = readFromFile(argv[2]);
@@ -16,15 +17,18 @@ int main(int argc, char ** argv) {
 	printToScreen(A);
 	printToScreen(b);
 
-	res = eliminate(A,b);
+	res = eliminate(A, b, x);
 	x = createMatrix(b->r, 1);
-	if (x != NULL) {
-		res = backsubst(x,A,b);
-
+	
+	if (x != NULL) 
+	{
+		res = backsubst(x, A, b);
 		printToScreen(x);
-	  freeMatrix(x);
-	} else {
-					fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
+		freeMatrix(x);
+	}
+	else 
+	{
+		fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
 	}
 
 	freeMatrix(A);

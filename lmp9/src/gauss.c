@@ -1,25 +1,46 @@
+#include <math.h>
 #include "gauss.h"
-// pierwsza zmiana
-/**
- * Zwraca 0 - elimnacja zakonczona sukcesem
- * Zwraca 1 - macierz osobliwa - dzielenie przez 0
- */
-int eliminate(Matrix *mat, Matrix *b){
-    		int row = mat->r;
-		int i;
-		int j;
-		int z;
-		double m;
-		for (i=0; i<row-1; i++){
-			for(j=i+1; j<row; j++){
-				if(mat->data[i][i]==0)
-					return 1;
-				m=mat->data[j][i]/mat->data[i][i];
-				for(z=i; z<row; z++)
-					mat->data[j][z]-=m*mat->data[i][z];
-				b->data[j][0]-=m * b->data[i][0];
+
+int eliminate (Matrix *mac, Matrix *b, Matrix *x)
+{
+	int n = mac->r;
+	int k, w, i;
+	double m;
+	double *temp;
+	double *tymb; /*zmienna tymczasowa dla b*/
+
+	for (k=0; k<n-1; k++)
+	{
+		int kmax;
+
+		for (w = k+1; w < n; w++)
+		{
+			if ( fabs(mac->data[w][k]) > fabs(mac->data[kmax][k]) )
+				kmax = w;
+
+			if( kmax != k )
+			{
+				temp = mac->data[k];
+				mac->data[k] = mac->data[kmax];
+				mac->data[kmax] = temp;
+
+				tymb = b->data[k];
+				b->data[k] = b->data[kmax];
+				b->data[kmax] = tymb;		
 			}
 		}
-		return 0;
+		for (w = k+1; w < n; w++)
+		{
+			if(mac->data[k][k] == 0)
+				return 1;
+			m = mac->data[w][k] / mac->data[k][k];
+			for (i = k; i < n; i++)
+				mac->data[w][i] -= m * mac->data[k][i];
+			b->data[w][0] -= m*b->data[k][0];
+			
+		}
+	}
+
+	return 0;
 }
 
