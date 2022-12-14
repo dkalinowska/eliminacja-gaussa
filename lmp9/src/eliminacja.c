@@ -1,5 +1,5 @@
 #include "eliminacja.h"
-
+//eliminacja weroniki julii jastrzebskiej
 
 int eliminacja (Matrix *mac, Matrix *b, Matrix *x){
 	int n=mac->r;
