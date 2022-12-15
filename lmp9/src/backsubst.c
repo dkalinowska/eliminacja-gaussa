@@ -1,4 +1,5 @@
 #include "backsubst.h"
+#include <stdio.h>
 
 /* 
  * Zwraca 0 - wsteczne podstawienie zakonczone sukcesem
@@ -12,12 +13,16 @@ int backsubst( Matrix *x, Matrix *mat, Matrix *b )
 	/* sprawdzenie wymiarów macierzy */
 
 	if (mat -> r != mat -> c || mat -> r != b -> r) 
+	{
+		fprintf(stderr, "zle wymiary\n");
 		return 2;
+	}
 
 	double **A = mat->data;
 	double **B = b->data;
 	double **X = x->data;
 	int w;
+
 
 	for( w = mat -> r - 1; w >= 0; w-- )
 	{
