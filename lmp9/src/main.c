@@ -6,10 +6,10 @@
 
 
 int main(int argc, char ** argv) {
-	int res;
+	
 	Matrix * A = readFromFile(argv[1]);
 	Matrix * b = readFromFile(argv[2]);
-	Matrix * x;
+	Matrix * x = NULL;
 
 	if (A == NULL) return -1;
 	if (b == NULL) return -2;
@@ -17,12 +17,12 @@ int main(int argc, char ** argv) {
 	printToScreen(b);
 
 	
-	if((res = eliminate(A,b))==0)
+	if( eliminate(A,b) == 0)
 	{
 		x = createMatrix(b->r, 1);
 		if (x != NULL) 
 		{
-			res = backsubst(x,A,b);
+			backsubst(x, A, b);
 			printToScreen(x);
 	  		freeMatrix(x);
 		} 
@@ -31,7 +31,7 @@ int main(int argc, char ** argv) {
 			fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
 		}
 	}
-	else fprintf(stderr, "Nie działa\n");
+	else fprintf(stderr, "Nie udało się wykonać eliminacji\n");
 
 	freeMatrix(A);
 	freeMatrix(b);

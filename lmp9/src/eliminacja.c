@@ -9,6 +9,9 @@ int eliminacja (Matrix *mac, Matrix *b, Matrix *x){
 	double m;
 	double *temp;
 	double *tymb;
+
+	printf("działa elim");
+
 	for (k=0; k<n-1; k++){
 		int kmax;
 		for (w=k+1; w<n; w++){
